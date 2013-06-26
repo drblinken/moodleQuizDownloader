@@ -2,6 +2,9 @@ require 'optparse'
 require 'ostruct'
 
 class OptionHandler
+  def valid_commands
+    [:list, :download, :connect]
+  end
   attr_reader :options, :optionparser
   def initialize(arguments = [])
     @arguments = arguments
@@ -15,6 +18,7 @@ class OptionHandler
     options.usage = optionparser.help unless valid?(options)
   end
   def valid?(options)
+    options.valid &&
     options.moodle_username &&
     options.moodle_password &&
     options.moodle_server &&
@@ -25,18 +29,22 @@ class OptionHandler
     # The options specified on the command line will be collected in *options*.
     # We set default values here.
     options = OpenStruct.new
+    options.valid = true
     options.verbose = false
     options.moodle_username = ENV['MOODLE_USERNAME']
     options.moodle_password = ENV['MOODLE_PASSWORD']
     options.moodle_server = ENV['MOODLE_SERVER']
-    options.outputdir = "."
+    options.outputdir = "out"
     options.exam_id = 0
     options.command = :list
     options.usage = nil
 
 
     opt_parser = OptionParser.new do |opts|
-      opts.banner = "Usage: mqd.rb [options] list|download"
+      opts.banner = <<DELIM
+Usage: moodleQuizDownloader [options] <command>
+Where <command> is one of the following: #{valid_commands.join(", ")}
+DELIM
 
       opts.separator ""
       opts.separator "Specific options:"
@@ -83,7 +91,12 @@ class OptionHandler
 
     end
     opt_parser.order(args) do | command |
-      options.command = command.to_sym
+      command = command.to_sym
+      if valid_commands.include?(command)
+        options.command = command
+      else
+        options.valid=false
+      end
     end
     validate(options,opt_parser)
     options

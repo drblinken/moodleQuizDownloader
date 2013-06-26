@@ -12,6 +12,17 @@ describe OptionHandler do
     options = option_handler.options
     expect(options.verbose).to be_true
   end
+  it "has a smoketest option" do
+    args = "--user drblinken -p geheim download connect"
+    options = OptionHandler.new(args.split(" ")).options
+    expect(options.command).to eq(:connect)
+  end
+  it "accepts only valid commands" do
+    args = "--user drblinken -p geheim dosomethingelse"
+    options = OptionHandler.new(args.split(" ")).options
+    expect(options.command).to eq(:list)
+    expect(options.usage).not_to be_nil
+  end
   describe "reads username" do
     it "from option -u" do
       args = "download -u drblinken -p geheim download"
@@ -74,10 +85,10 @@ describe OptionHandler do
       options = OptionHandler.new(args.split(" ")).options
       expect(options.outputdir).to eq('/tmp/bla')
     end
-    it "defaults to ." do
+    it "defaults to out" do
       args = "-e 4711 download -u drblinken -p geheim -b"
       options = OptionHandler.new(args.split(" ")).options
-      expect(options.outputdir).to eq('.')
+      expect(options.outputdir).to eq('out')
     end
   end
   describe "server" do
