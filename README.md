@@ -19,15 +19,19 @@ Or install it yourself as:
 ## Usage
 
 for example, run
-    ruby lib/moodleQuizDownloader.rb -e 4711 -u drblinken -s http://moodle2.htw-berlin.de/ -p geheim --verbose
+
+    $ ruby lib/moodleQuizDownloader.rb -e 4711 -u drblinken -s http://moodle2.htw-berlin.de/ -p geheim --verbose
+
 to see a list of all attempts in exam 4711 on the specified server,
 and
-    ruby lib/moodleQuizDownloader.rb -e 4711 -u drblinken -s http://moodle2.htw-berlin.de/ -p geheim --verbose download
+
+    $ ruby lib/moodleQuizDownloader.rb -e 4711 -u drblinken -s http://moodle2.htw-berlin.de/ -p geheim --verbose download
 
 to download them.
 
 to see all options:
-    ruby lib/moodleQuizDownloader.rb help
+
+    $ ruby lib/moodleQuizDownloader.rb help
 
 ## Contributing
 
