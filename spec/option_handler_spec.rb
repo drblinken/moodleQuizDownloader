@@ -98,4 +98,19 @@ describe OptionHandler do
       expect(options.moodle_server).to eq('http://moodle2.htw-berlin.de')
     end
   end
+
+  describe "validates" do
+    it "all settings" do
+      args = ""
+      options = OptionHandler.new(args.split(" ")).parse
+      expect(options.usage).not_to be_nil
+      expect(options.usage).to include("server")
+    end
+    it "all settings given" do
+      args = "-u drblinken -p geheim -s http://x.y -e 311"
+      options = OptionHandler.new(args.split(" ")).parse
+      expect(options.usage).to be_nil
+    end
+
+  end
 end

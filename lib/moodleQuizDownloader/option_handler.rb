@@ -8,23 +8,31 @@ class OptionHandler
     @options, @optionparser = parse(arguments)
   end
   def usage
-    "Usage: bla bla"
+    @options.usage
   end
 
+  def validate(options,optionparser)
+    options.usage = optionparser.help unless valid?(options)
+  end
+  def valid?(options)
+    options.moodle_username &&
+    options.moodle_password &&
+    options.moodle_server &&
+    options.exam_id != 0
+  end
 
-  def parse(args)
+  def parse(args = @arguments)
     # The options specified on the command line will be collected in *options*.
     # We set default values here.
     options = OpenStruct.new
     options.verbose = false
-    options.download = false
-    options.list = true
     options.moodle_username = ENV['MOODLE_USERNAME']
     options.moodle_password = ENV['MOODLE_PASSWORD']
     options.moodle_server = ENV['MOODLE_SERVER']
     options.outputdir = "."
     options.exam_id = 0
     options.command = :list
+    options.usage = nil
 
 
     opt_parser = OptionParser.new do |opts|
@@ -58,28 +66,26 @@ class OptionHandler
         options.moodle_server = server
       end
 
-      opts.on("-b", "--[no-]verbose", "Run verbosely") do |v|
-        options.verbose = v
-      end
-
       opts.separator ""
       opts.separator "Common options:"
 
-      # No argument, shows at tail.  This will print an options summary.
-      # Try it and see!
       opts.on_tail("-h", "--help", "Show this message") do
         puts opts
         exit
       end
 
-      # Another typical switch to print the version.
       opts.on_tail("-v", "--version", "Show version") do
         options.command = :version
       end
+      opts.on("-b", "--[no-]verbose", "Run verbosely") do |v|
+        options.verbose = v
+      end
+
     end
     opt_parser.order(args) do | command |
       options.command = command.to_sym
     end
-    return options, opt_parser
+    validate(options,opt_parser)
+    options
   end  # parse()
 end
