@@ -3,8 +3,8 @@ require_relative "moodleQuizDownloader/option_handler.rb"
 require_relative "moodleQuizDownloader/quiz_downloader.rb"
 
 module MoodleQuizDownloader
-  def run_script
-    options = OptionHandler.new(ARGV).parse
+  def run_script(arguments)
+    options = OptionHandler.new(arguments).parse
     if options.usage
       puts options.usage
       exit
@@ -13,5 +13,4 @@ module MoodleQuizDownloader
   end
 end
 
-include MoodleQuizDownloader
-run_script
+
