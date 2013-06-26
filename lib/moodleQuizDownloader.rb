@@ -1,5 +1,9 @@
 require "moodleQuizDownloader/version"
-
+require "moodleQuizDownloader/optionparser"
 module MoodleQuizDownloader
-  # Your code goes here...
+  def run_script
+
+  end
 end
+
+run_script
