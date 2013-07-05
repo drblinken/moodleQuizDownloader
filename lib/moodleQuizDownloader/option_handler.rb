@@ -62,13 +62,13 @@ DELIM
               "(can also be set via MOODLE_USERNAME environment variable)") do |username|
         options.moodle_username = username
       end
-      opts.on("-p", "--password PASSWORD]",
+      opts.on("-p", "--password PASSWORD",
               "Your Moodle Password",
               "(can also be set via MOODLE_PASSWORD environment variable)") do |password|
         options.moodle_password = password
       end
 
-      opts.on("-s", "--server SERVER]",
+      opts.on("-s", "--server SERVER",
               "Your Moodle Server",
               "(can also be set via MOODLE_SERVER environment variable)") do |server|
         options.moodle_server = server
