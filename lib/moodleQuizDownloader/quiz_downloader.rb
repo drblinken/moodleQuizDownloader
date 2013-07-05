@@ -25,6 +25,7 @@ class QuizDownloader
         puts "could not connect to server #{server}"
         #puts e.message
     end
+    page
   end
   def attemptlist(options,agent)
     puts "connecting to moodle" if options.verbose

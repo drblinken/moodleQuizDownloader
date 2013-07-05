@@ -33,6 +33,22 @@ to see all options:
 
     $ moodleQuizDownloader.rb help
 
+## try it out in irb
+
+e.g.:
+
+     irb
+     load 'lib/moodleQuizDownloader.rb'
+
+     arguments = "-o /Users/kleinen/Documents/ss2013/exam-     ckup/info3/pz1/exam_a/raw -e 23843".split(" ")
+     options = OptionHandler.new(arguments).parse
+     q = QuizDownloader.new
+     agent = Mechanize.new
+     q.smoketest(options.moodle_server)
+     q.attemptlist(options,agent)
+     page = q.smoketest(options.moodle_server)
+     username_input = page.search('#username')
+
 ## Contributing
 
 1. Fork it
