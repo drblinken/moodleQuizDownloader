@@ -16,6 +16,21 @@ Or install it yourself as:
 
     $ gem install moodleQuizDownloader
 
+## What it does
+
+This script downloads all attempts of a moodle quiz and saves them in pdfs named with the student names.
+For this it logs into moodle via the http/html web site, goes to the quiz and scrapes all information like student names etc. from the html it finds.
+
+To get started, you first need the moodle id of the quiz you want to download. E.g. if the url shown in the browser was
+
+https://moodle.htw-berlin.de/mod/quiz/report.php?id=4711&mode=overview
+
+If you view the quiz's attempts in the browser,
+
+     4711
+
+is the id.
+
 ## Usage
 
 for example, run
