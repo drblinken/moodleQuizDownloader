@@ -82,7 +82,7 @@ class QuizDownloader
 
   def download(attempt_list,agent)
     FileUtils.mkdir_p(options.outputdir)
-    puts "attempt_list"
+    count = 0
     attempt_list.each do | attempt|
       student_name, attempt_url = attempt
 
@@ -93,8 +93,6 @@ class QuizDownloader
       chatter attempt_url
       #student = extractUserName(page)
       student = student_name
-      outputfile = FileNameCreator.fileNameFor(options.outputdir,student)
-      outputfile_html = FileNameCreator.html_fileNameFor(options.outputdir,student)
 
       puts "Loading: #{student}"
 
@@ -103,12 +101,16 @@ class QuizDownloader
       kit = PDFKit.new(page.body)
       if options.html
         chatter "save html"
+        outputfile_html = FileNameCreator.file_name_for(options.outputdir,student,'html')
         File.open(outputfile_html, 'w') { |file| file.write(page.body) }
       else
         chatter "kit to file"
+        outputfile = FileNameCreator.file_name_for(options.outputdir,student)
         kit.to_file(outputfile)
       end
+      count += 1
     end
+    puts "downloaded #{count} attempts"
   end
 end
 

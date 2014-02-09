@@ -6,14 +6,23 @@ describe "FileNameCreator" do
      end
     it "should create name by combining first and last name" do
       name = "Teo Teststudent"
-      FileNameCreator.fileNameFor(outputdir,name).should == "#{outputdir}/TeoTeststudent.pdf"
+      FileNameCreator.file_name_for(outputdir,name).should == "#{outputdir}/TeoTeststudent.pdf"
     end
     it "should replace umlauts in the file name" do
       name = "Leo Lüße"
-      FileNameCreator.fileNameFor(outputdir,name).should == "#{outputdir}/LeoLuesse.pdf"
+      FileNameCreator.file_name_for(outputdir,name).should == "#{outputdir}/LeoLuesse.pdf"
     end
     it "should handle middle names" do
       name = "Teo von Teststudent"
-      FileNameCreator.fileNameFor(outputdir,name).should == "#{outputdir}/TeovonTeststudent.pdf"
+      FileNameCreator.file_name_for(outputdir,name).should == "#{outputdir}/TeovonTeststudent.pdf"
+    end
+    it "should handle hyphens in the last name" do
+      name = "An Xa-Yyy"
+      FileNameCreator.file_name_for(outputdir,name).should == "#{outputdir}/AnXaYyy.pdf"
+    end
+
+    it "should create html extensions" do
+      name = "Hans Uwe Müller-Heinz"
+      FileNameCreator.file_name_for(outputdir,name,'html').should == "#{outputdir}/HansUweMuellerHeinz.html"
     end
 end
