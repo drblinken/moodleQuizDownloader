@@ -9,7 +9,7 @@ module MoodleQuizDownloader
       puts options.usage
       exit
     end
-    QuizDownloader.new.run(options)
+    QuizDownloader.new(options).run
   end
 end
 

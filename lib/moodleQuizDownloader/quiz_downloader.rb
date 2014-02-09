@@ -3,14 +3,40 @@ require 'pdfkit'
 require 'asciify'
 require "bundler/setup"
 require 'fileutils'
-require_relative 'file_name_creator'
 
+require_relative 'file_name_creator'
 require_relative 'moodle_parser'
 
-
-
 class QuizDownloader
+
   include MoodleParser
+
+  attr_reader :options
+  def initialize(options)
+    @options = options
+  end
+
+  def run
+    agent = Mechanize.new
+    case options.command
+      when :connect
+        smoketest(options.moodle_server, options.moodle_username, options.moodle_password)
+      when :list
+        attempt_list = attemptlist(agent)
+        puts "found #{attempt_list.length} attempts:"
+        puts attempt_list.map{|a,b| a}
+      when :download
+        chatter "options #{options.inspect}"
+        attempt_list = attemptlist(agent)
+        download(attempt_list,agent)
+      else
+        puts "command #{options.command} not recognized"
+    end
+  end
+
+  def chatter(message)
+    puts "==== #{message}" if options.verbose
+  end
 
   def smoketest(server, username = "xxx", password ="xxx")
     begin
@@ -40,19 +66,18 @@ class QuizDownloader
     !page.nil?
   end
 
-  def attemptlist(options,agent)
-    puts "connecting to moodle" if options.verbose
+  def attemptlist(agent)
+    chatter "connecting to moodle"
     page = login(agent,moodle_login_page(options.moodle_server),options.moodle_username,options.moodle_password)
     moodle_overview_url = moodle_quiz_report(options.moodle_server)+options.exam_id.to_s
-    puts "==== downloading overview" if options.verbose
-    puts "==== url:#{moodle_overview_url}" if options.verbose
+    chatter "downloading overview"
+    chatter "url:#{moodle_overview_url}"
 
     page = agent.get(moodle_overview_url)
-    #attempts = selectReviewLinks(page)
     attempt_list = extract_attempt_list(page)
   end
 
-  def download(attempt_list,options,agent)
+  def download(attempt_list,agent)
     FileUtils.mkdir_p(options.outputdir)
     puts "attempt_list"
     attempt_list.each do | attempt|
@@ -60,9 +85,9 @@ class QuizDownloader
 
       attempt_url = attempt_url+"&showall=1"
       page = agent.get(attempt_url)
-      puts "==== downloading attempt" if options.verbose
-      puts "==== url  #{attempt_url}" if options.verbose
-      puts attempt_url if options.verbose
+      chatter "downloading attempt"
+      chatter "url  #{attempt_url}"
+      chatter attempt_url
       #student = extractUserName(page)
       student = student_name
       outputfile = FileNameCreator.fileNameFor(options.outputdir,student)
@@ -70,36 +95,14 @@ class QuizDownloader
 
       puts "Loading: #{student}"
 
-      puts "==== downloading overview" if options.verbose
-      puts "==== outputfile:#{options.outputdir}" if options.verbose
-      puts "==== body #{page.body}"
-      puts "==== new KIT"
-      #kit = PDFKit.new(page.body)
-      puts "=== save html"
+      chatter "downloading overview"
+      chatter "outputfile:#{options.outputdir}"
+      kit = PDFKit.new(page.body)
+      chatter "save html"
       File.open(outputfile_html, 'w') { |file| file.write(page.body) }
-      puts "==== kit to file"
-      #kit.to_file(outputfile)
+      chatter "kit to file"
+      kit.to_file(outputfile)
     end
   end
-
-
-  def run(options)
-    agent = Mechanize.new
-    case options.command
-      when :connect
-        smoketest(options.moodle_server, options.moodle_username, options.moodle_password)
-      when :list
-        attempt_list = attemptlist(options,agent)
-        puts "found #{attempt_list.length} attempts:"
-        puts attempt_list.map{|a,b| a}
-      when :download
-        attempt_list = attemptlist(options,agent)
-        download(attempt_list,options,agent)
-      else
-        puts "command #{options.command} not recognized"
-    end
-  end
-
-
 end
 

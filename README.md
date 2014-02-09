@@ -64,6 +64,10 @@ e.g.:
      page = q.smoketest(options.moodle_server)
      username_input = page.search('#username')
 
+## Todos / New Features
+
+* Add an option to be prompted for the password ( or just do it automatically if it is not provided)
+
 ## Contributing
 
 1. Fork it

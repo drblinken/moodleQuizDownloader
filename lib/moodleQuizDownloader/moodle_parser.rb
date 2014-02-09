@@ -1,3 +1,9 @@
+
+# This file contains Moodle settings
+# like urls and xml paths
+# decided against putting them in a config file,
+# as they can be adapted here.
+
 module MoodleParser
     @@user_view_regexp = Regexp.new('http://moodle2.htw-berlin.de/moodle/user/view.php')
 
