@@ -4,7 +4,7 @@ describe "QuizDownloader" do
 
   #https://relishapp.com/rspec/rspec-mocks/docs/method-stubs
   let(:options){ double()}
-  let(:html_dir){ File.join(File.dirname(__FILE__),'moodleparsing') }
+  let(:html_dir){ File.join(File.dirname(__FILE__),'moodleparsing/testfiles') }
 
   it "should detect login failure" do
     agent = Mechanize.new

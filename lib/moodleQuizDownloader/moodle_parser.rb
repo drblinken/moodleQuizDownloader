@@ -32,8 +32,8 @@ module MoodleParser
 
   def selectReviewLinks(page)
     page.links.select do |ll|
-      cls = ll.attributes.attributes['class']
-      cls && cls.value == 'reviewlink'
+      css_class = ll.attributes.attributes['class']
+      css_class && css_class.value == 'reviewlink'
     end
   end
 
