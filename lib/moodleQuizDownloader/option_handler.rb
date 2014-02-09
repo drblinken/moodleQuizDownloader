@@ -3,7 +3,7 @@ require 'ostruct'
 
 class OptionHandler
   def valid_commands
-    [:list, :download, :connect]
+    [:list, :download, :connect, :options]
   end
   attr_reader :options, :optionparser
   def initialize(arguments = [])
@@ -38,6 +38,7 @@ class OptionHandler
     options.exam_id = 0
     options.command = :list
     options.usage = nil
+    options.html = false
 
 
     opt_parser = OptionParser.new do |opts|
@@ -57,6 +58,11 @@ DELIM
               "Output Dir (defaults to . )") do | dir |
         options.outputdir = dir
       end
+      opts.on("-h", "--html",
+              "Save Exams in HTML instead as PDFs") do | html |
+        options.html = html
+      end
+
       opts.on("-u", "--user USERNAME",
               "Your Moodle User Name",
               "(can also be set via MOODLE_USERNAME environment variable)") do |username|

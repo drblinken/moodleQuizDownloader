@@ -29,6 +29,9 @@ class QuizDownloader
         chatter "options #{options.inspect}"
         attempt_list = attemptlist(agent)
         download(attempt_list,agent)
+      when :options
+        puts "#{options.inspect}"
+
       else
         puts "command #{options.command} not recognized"
     end
@@ -98,10 +101,13 @@ class QuizDownloader
       chatter "downloading overview"
       chatter "outputfile:#{options.outputdir}"
       kit = PDFKit.new(page.body)
-      chatter "save html"
-      File.open(outputfile_html, 'w') { |file| file.write(page.body) }
-      chatter "kit to file"
-      kit.to_file(outputfile)
+      if options.html
+        chatter "save html"
+        File.open(outputfile_html, 'w') { |file| file.write(page.body) }
+      else
+        chatter "kit to file"
+        kit.to_file(outputfile)
+      end
     end
   end
 end
