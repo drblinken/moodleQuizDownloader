@@ -45,7 +45,8 @@ class QuizDownloader
     page = login(agent,moodle_login_page(options.moodle_server),options.moodle_username,options.moodle_password)
     moodle_overview_url = moodle_quiz_report(options.moodle_server)+options.exam_id.to_s
     puts "==== downloading overview" if options.verbose
-    puts moodle_overview_url if options.verbose
+    puts "==== url:#{moodle_overview_url}" if options.verbose
+
     page = agent.get(moodle_overview_url)
     #attempts = selectReviewLinks(page)
     attempt_list = extract_attempt_list(page)
@@ -53,19 +54,31 @@ class QuizDownloader
 
   def download(attempt_list,options,agent)
     FileUtils.mkdir_p(options.outputdir)
+    puts "attempt_list"
     attempt_list.each do | attempt|
       student_name, attempt_url = attempt
 
       attempt_url = attempt_url+"&showall=1"
       page = agent.get(attempt_url)
       puts "==== downloading attempt" if options.verbose
+      puts "==== url  #{attempt_url}" if options.verbose
       puts attempt_url if options.verbose
       #student = extractUserName(page)
       student = student_name
       outputfile = FileNameCreator.fileNameFor(options.outputdir,student)
+      outputfile_html = FileNameCreator.html_fileNameFor(options.outputdir,student)
+
       puts "Loading: #{student}"
-      kit = PDFKit.new(page.body)
-      kit.to_file(outputfile)
+
+      puts "==== downloading overview" if options.verbose
+      puts "==== outputfile:#{options.outputdir}" if options.verbose
+      puts "==== body #{page.body}"
+      puts "==== new KIT"
+      #kit = PDFKit.new(page.body)
+      puts "=== save html"
+      File.open(outputfile_html, 'w') { |file| file.write(page.body) }
+      puts "==== kit to file"
+      #kit.to_file(outputfile)
     end
   end
 

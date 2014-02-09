@@ -3,16 +3,13 @@ module MoodleParser
 
     def moodle_login_page(server)
     "#{server}"
-    # oder vielleicht besser:
-    #https://moodle.htw-berlin.de/login/index.php
     # "#{server}/moodle/login/index.php"
   end
   def moodle_item(server)
     "#{server}/moodle/mod/quiz/view.php?id="
   end
   def moodle_quiz_report(server)
-  #   https://moodle.htw-berlin.de/mod/quiz/report.php?id=46982&mode=overview
-    "#{server}/mod/quiz/report.php?mode=overview&id="
+    "#{server}/moodle/mod/quiz/report.php?mode=overview&id="
   end
 
   def login(agent,moodle_login_page,moodle_username,moodle_password)
