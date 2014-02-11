@@ -3,8 +3,9 @@
 # like urls and xml paths
 # decided against putting them in a config file,
 # as they can be adapted here.
-
+require_relative 'attempt_selector.rb'
 module MoodleParser
+  include MoodleAttemptSelector
     @@user_view_regexp = Regexp.new('http://moodle2.htw-berlin.de/moodle/user/view.php')
 
   def moodle_login_page(server)
@@ -22,6 +23,7 @@ module MoodleParser
   end
 
   def login(agent,moodle_login_page,moodle_username,moodle_password)
+    chatter "connecting to moodle"
     puts "++++#{moodle_login_page}"
     page = agent.get(moodle_login_page)
     form = page.forms[1]
@@ -35,6 +37,17 @@ module MoodleParser
       css_class = ll.attributes.attributes['class']
       css_class && css_class.value == 'reviewlink'
     end
+  end
+
+  def extract_complete_attempt_list(page)
+    page = select_all_attempts_done(page)
+    attempt_list = extract_attempt_list(page)
+    if (announced = extract_attempt_count(page)) != attempt_list.size
+      puts "#### WARNING: There was a different number of "
+      puts "####          attempts announced on the page - #{announced}"
+      puts "####          but only #{attempt_list.size} could be downloaded"
+    end
+    attempt_list
   end
 
   def extract_attempt_list(page)

@@ -17,7 +17,20 @@
 # as default -
 # to archive quizzes later on, this Module selects
 # all attempts.
+
+
+# form
+#mform1
 module MoodleAttemptSelector
+
+  def select_all_attempts_done(page)
+    form = page.form_with(id: 'mform1')
+    selectlist = form.field_with(id: 'id_attempts')
+    selectlist.value="all_with"
+    page = form.submit
+  end
+
+
 
 end
 

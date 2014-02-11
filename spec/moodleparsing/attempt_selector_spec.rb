@@ -39,5 +39,11 @@ describe MoodleParser do
     all_attempts_shown(page).should == true
   end
 
+  it "on a page with not all attempts, extract_complete_attempt_list automatically selects all_with" do
+    page = agent.get("file:///#{html_dir}/attempts-fewer-shown.html")
+    attempt_list = extract_complete_attempt_list(page)
+    attempt_list.size.should == 17
+
+  end
 
 end
