@@ -7,7 +7,7 @@
 module MoodleParser
     @@user_view_regexp = Regexp.new('http://moodle2.htw-berlin.de/moodle/user/view.php')
 
-    def moodle_login_page(server)
+  def moodle_login_page(server)
     "#{server}"
     # oder vielleicht besser:
     #https://moodle.htw-berlin.de/login/index.php
@@ -49,6 +49,20 @@ module MoodleParser
    result_list
   end
 
+  def extract_attempt_count(page)
+    ##class: quizattemptcounts
+    quizattemptcounts_div = page.at('.quizattemptcounts')
+    m = quizattemptcounts_div.content.match(/Attempts: (\d+)/)
+    m[1].to_i
+  end
+
+  def all_attempts_shown(page,number_of_attempts_shown = nil)
+    unless number_of_attempts_shown
+      number_of_attempts_shown = extract_attempt_list(page).size
+    end
+    number_of_attempts_shown == extract_attempt_count(page)
+  end
+
   def extractUserName(page)
 
     l = page.links.select {|x| @@user_view_regexp.match(x.href)}
@@ -67,5 +81,7 @@ module MoodleParser
     end
     nutzerbild.first.text.gsub(nutzerbild_string,"")
   end
+
+
 
 end

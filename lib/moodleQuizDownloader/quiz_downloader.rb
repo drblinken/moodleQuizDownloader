@@ -72,6 +72,7 @@ class QuizDownloader
   def attemptlist(agent)
     chatter "connecting to moodle"
     page = login(agent,moodle_login_page(options.moodle_server),options.moodle_username,options.moodle_password)
+
     moodle_overview_url = moodle_quiz_report(options.moodle_server)+options.exam_id.to_s
     chatter "downloading overview"
     chatter "url:#{moodle_overview_url}"

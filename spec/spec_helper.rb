@@ -1,5 +1,6 @@
 require 'mechanize'
 require_relative '../lib/moodleQuizDownloader/moodle_parser.rb'
+
 include MoodleParser
 
 

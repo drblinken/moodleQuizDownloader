@@ -14,16 +14,30 @@ describe MoodleParser do
 
   it "counts the attempts on page" do
     page = agent.get("file:///#{html_dir}/attempts-17-shown.html")
-    agent.extract_attempt_list(page).size.should == 17
+    extract_attempt_list(page).size.should == 17
   end
 
   it "counts the attempts on page" do
     page = agent.get("file:///#{html_dir}/attempts-fewer-shown.html")
-    agent.extract_attempt_list(page).size.should == 17
+    extract_attempt_list(page).size.should == 9
   end
 
 
-  it "extract the listed attempt number"
+  it "extracts the listed attempt number" do
+    page = agent.get("file:///#{html_dir}/attempts-fewer-shown.html")
+    extract_attempt_count(page).should == 17
+  end
 
-  it "compares extracted attempt number with attempts on page"
+
+  it "compares extracted attempt number with attempts on page" do
+    page = agent.get("file:///#{html_dir}/attempts-fewer-shown.html")
+    all_attempts_shown(page).should == false
+  end
+
+  it "compares extracted attempt number with attempts on page" do
+    page = agent.get("file:///#{html_dir}/attempts-17-shown.html")
+    all_attempts_shown(page).should == true
+  end
+
+
 end
