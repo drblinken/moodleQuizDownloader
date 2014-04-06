@@ -24,7 +24,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'mechanize'
   spec.add_dependency 'pdfkit'
   spec.add_dependency 'wkhtmltopdf-binary'
-
+  spec.add_dependency 'highline' # prompt for password
 
 
   spec.add_development_dependency "bundler", "~> 1.3"

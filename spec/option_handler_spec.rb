@@ -53,6 +53,14 @@ describe OptionHandler do
     options = OptionHandler.new(args.split(" ")).options
     expect(options.moodle_password).to eq('geheim')
   end
+  describe "password" do
+    it "is optional" do
+    args = "-u drblinken -s http://moodle.de -e 4711 download"
+    option_handler = OptionHandler.new(args.split(" "))
+    options = option_handler.options
+    expect(option_handler.valid?(options)).to be_true
+    end
+  end
   it "finds the command list among the options" do
     args= "-u drblinken list -p password"
     option_handler = OptionHandler.new(args.split(" "))

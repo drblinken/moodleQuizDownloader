@@ -4,13 +4,21 @@ require_relative "moodleQuizDownloader/quiz_downloader.rb"
 require_relative "moodleQuizDownloader/attempt_selector.rb"
 
 module MoodleQuizDownloader
+
   def run_script(arguments)
-    options = OptionHandler.new(arguments).parse
+    option_handler = OptionHandler.new(arguments)
+    options = option_handler.options
+    options.moodle_password ||= prompt_for_password
     if options.usage
       puts options.usage
       exit
     end
     QuizDownloader.new(options).run
+  end
+
+  def prompt_for_password(prompt="Enter Password")
+    require 'highline/import'
+    ask(prompt) {|q| q.echo = false}
   end
 end
 

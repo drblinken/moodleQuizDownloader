@@ -20,7 +20,7 @@ class OptionHandler
   def valid?(options)
     options.valid &&
     options.moodle_username &&
-    options.moodle_password &&
+    #options.moodle_password &&
     options.moodle_server &&
     options.exam_id != 0
   end
@@ -107,4 +107,5 @@ DELIM
     validate(options,opt_parser)
     options
   end  # parse()
+
 end
