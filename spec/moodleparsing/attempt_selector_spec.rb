@@ -39,14 +39,14 @@ describe MoodleParser do
     all_attempts_shown(page).should == true
   end
 
-  it "on a page with not all attempts, extract_complete_attempt_list automatically selects all_with" do
-    pending
+  #it "on a page with not all attempts, extract_complete_attempt_list automatically selects all_with" do
+   # pending
    # page = agent.get("file:///#{html_dir}/attempts-fewer-shown.html")
    # this doesn't work with saved files as this clicking on the
    # link -> goes to login page
    # attempt_list = extract_complete_attempt_list(page)
    # attempt_list.size.should == 17
 
-  end
+  #end
 
 end
