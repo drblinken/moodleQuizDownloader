@@ -8,11 +8,11 @@ module MoodleQuizDownloader
   def run_script(arguments)
     option_handler = OptionHandler.new(arguments)
     options = option_handler.options
-    options.moodle_password ||= prompt_for_password
     if options.usage
       puts options.usage
       exit
     end
+    options.moodle_password ||= prompt_for_password
     QuizDownloader.new(options).run
   end
 
