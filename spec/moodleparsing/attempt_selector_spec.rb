@@ -14,29 +14,29 @@ describe MoodleParser do
 
   it "counts the attempts on page" do
     page = agent.get("file:///#{html_dir}/attempts-17-shown.html")
-    extract_attempt_list(page).size.should == 17
+    expect(extract_attempt_list(page).size).to eq 17
   end
 
   it "counts the attempts on page" do
     page = agent.get("file:///#{html_dir}/attempts-fewer-shown.html")
-    extract_attempt_list(page).size.should == 9
+    expect(extract_attempt_list(page).size).to eq 9
   end
 
 
   it "extracts the listed attempt number" do
     page = agent.get("file:///#{html_dir}/attempts-fewer-shown.html")
-    extract_attempt_count(page).should == 17
+    expect(extract_attempt_count(page)).to eq 17
   end
 
 
   it "compares extracted attempt number with attempts on page" do
     page = agent.get("file:///#{html_dir}/attempts-fewer-shown.html")
-    all_attempts_shown(page).should == false
+    expect(all_attempts_shown(page)).to eq false
   end
 
   it "compares extracted attempt number with attempts on page" do
     page = agent.get("file:///#{html_dir}/attempts-17-shown.html")
-    all_attempts_shown(page).should == true
+    expect(all_attempts_shown(page)).to eq true
   end
 
   #it "on a page with not all attempts, extract_complete_attempt_list automatically selects all_with" do
@@ -45,7 +45,7 @@ describe MoodleParser do
    # this doesn't work with saved files as this clicking on the
    # link -> goes to login page
    # attempt_list = extract_complete_attempt_list(page)
-   # attempt_list.size.should == 17
+   # attempt_list.size).to eq 17
 
   #end
 

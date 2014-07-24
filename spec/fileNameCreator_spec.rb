@@ -6,23 +6,23 @@ describe "FileNameCreator" do
      end
     it "should create name by combining first and last name" do
       name = "Teo Teststudent"
-      FileNameCreator.file_name_for(outputdir,name).should == "#{outputdir}/TeoTeststudent.pdf"
+      expect(FileNameCreator.file_name_for(outputdir,name)).to eq("#{outputdir}/TeoTeststudent.pdf")
     end
     it "should replace umlauts in the file name" do
       name = "Leo Lüße"
-      FileNameCreator.file_name_for(outputdir,name).should == "#{outputdir}/LeoLuesse.pdf"
+      expect(FileNameCreator.file_name_for(outputdir,name)).to eq("#{outputdir}/LeoLuesse.pdf")
     end
     it "should handle middle names" do
       name = "Teo von Teststudent"
-      FileNameCreator.file_name_for(outputdir,name).should == "#{outputdir}/TeovonTeststudent.pdf"
+      expect(FileNameCreator.file_name_for(outputdir,name)).to eq("#{outputdir}/TeovonTeststudent.pdf")
     end
     it "should handle hyphens in the last name" do
       name = "An Xa-Yyy"
-      FileNameCreator.file_name_for(outputdir,name).should == "#{outputdir}/AnXaYyy.pdf"
+      expect(FileNameCreator.file_name_for(outputdir,name)).to eq("#{outputdir}/AnXaYyy.pdf")
     end
 
     it "should create html extensions" do
       name = "Hans Uwe Müller-Heinz"
-      FileNameCreator.file_name_for(outputdir,name,'html').should == "#{outputdir}/HansUweMuellerHeinz.html"
+      expect(FileNameCreator.file_name_for(outputdir,name,'html')).to eq("#{outputdir}/HansUweMuellerHeinz.html")
     end
 end

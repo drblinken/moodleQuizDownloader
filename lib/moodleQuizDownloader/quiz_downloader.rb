@@ -108,6 +108,7 @@ class QuizDownloader
         chatter "kit to file"
         outputfile = FileNameCreator.file_name_for(options.outputdir,student)
         kit.to_file(outputfile)
+        chatter "x"
       end
       count += 1
     end

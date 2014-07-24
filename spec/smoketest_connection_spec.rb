@@ -10,12 +10,12 @@ describe "QuizDownloader" do
     agent = Mechanize.new
     page = agent.get("file:///#{html_dir}/login_failed.html")
     qd = QuizDownloader.new(options)
-    qd.login_successful?(page).should be_false
+    expect(qd.login_successful?(page)).to  be_falsey
   end
   it "should detect successful login" do
     agent = Mechanize.new
     page = agent.get("file:///#{html_dir}/login_successful.html")
     qd = QuizDownloader.new(options)
-    qd.login_successful?(page).should be_true
+    expect(qd.login_successful?(page)).to be_truthy
   end
 end

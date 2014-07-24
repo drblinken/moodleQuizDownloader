@@ -10,7 +10,7 @@ describe OptionHandler do
   it "has a verbose option" do
     option_handler = OptionHandler.new(["--verbose"])
     options = option_handler.options
-    expect(options.verbose).to be_true
+    expect(options.verbose).to be_truthy
   end
   it "has a smoketest option" do
     args = "--user drblinken -p geheim download connect"
@@ -58,7 +58,7 @@ describe OptionHandler do
     args = "-u drblinken -s http://moodle.de -e 4711 download"
     option_handler = OptionHandler.new(args.split(" "))
     options = option_handler.options
-    expect(option_handler.valid?(options)).to be_true
+    expect(option_handler.valid?(options)).to be_truthy
     end
   end
   it "finds the command list among the options" do

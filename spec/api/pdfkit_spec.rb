@@ -16,6 +16,6 @@ describe 'pdfkit api' do
      kit = PDFKit.new(html)
 #     >> k.to_file('simple.pdf')
      pdf = kit.to_pdf
-     pdf.should match /^%PDF-/
+     expect(pdf).to match /^%PDF-/
    end
 end

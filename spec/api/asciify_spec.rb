@@ -3,6 +3,6 @@ require 'asciify'
 describe "using asciify" do
   it "converts umlaute" do
      map = Asciify::Mapping.new(:default)
-    "ÄÖÜßäöü".asciify(map).should == "AeOeUessaeoeue"
+    expect("ÄÖÜßäöü".asciify(map)).to eq("AeOeUessaeoeue")
   end
 end
