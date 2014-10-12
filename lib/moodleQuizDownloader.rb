@@ -13,7 +13,11 @@ module MoodleQuizDownloader
       exit
     end
     options.moodle_password ||= prompt_for_password
-    QuizDownloader.new(options).run
+    begin
+      QuizDownloader.new(options).run
+    rescue PageException => e 
+      puts "#{e.message}"
+    end
   end
 
   def prompt_for_password(prompt="Enter Password")

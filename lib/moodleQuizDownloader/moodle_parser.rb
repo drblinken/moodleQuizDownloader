@@ -95,6 +95,4 @@ module MoodleParser
     nutzerbild.first.text.gsub(nutzerbild_string,"")
   end
 
-
-
 end

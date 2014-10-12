@@ -7,6 +7,9 @@ require 'fileutils'
 require_relative 'file_name_creator'
 require_relative 'moodle_parser'
 
+  class PageException < Exception
+  end
+
 class QuizDownloader
 
   include MoodleParser
@@ -76,9 +79,14 @@ class QuizDownloader
     moodle_overview_url = moodle_quiz_report(options.moodle_server)+options.exam_id.to_s
     chatter "downloading overview"
     chatter "url:#{moodle_overview_url}"
-
-    page = agent.get(moodle_overview_url)
-    attempt_list = extract_attempt_list(page)
+    begin
+      page = agent.get(moodle_overview_url)
+      attempt_list = extract_attempt_list(page)
+    rescue Mechanize::ResponseCodeError => e 
+      raise e unless (e.response_code == "404") 
+      raise PageException, "Exam not found - maybe the wrong id: #{options.exam_id} ?\n(while trying to access: #{moodle_overview_url})"
+    end 
+  
   end
 
   def download(attempt_list,agent)
