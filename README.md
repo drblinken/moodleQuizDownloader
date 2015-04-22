@@ -4,6 +4,8 @@ Automatically downloads all attempts of a Moodle Quiz and stores them as PDF or 
 
 ## Installation
 
+The moodleQuizDownloader is a ruby gem - you'll need to install [Ruby](https://www.ruby-lang.org/) first. 
+
     $ gem install moodleQuizDownloader
 
 ## What it does
