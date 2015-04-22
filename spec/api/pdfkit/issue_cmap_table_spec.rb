@@ -26,7 +26,7 @@ describe 'exploring cmap table of format 10 not implemented' do
      kit = PDFKit.new(page.body)
 #     >> k.to_file('simple.pdf')
      pdf = kit.to_pdf
-     kit.to_file('simple.pdf')
+#     kit.to_file('simple.pdf')
      expect(pdf).to match /^%PDF-/
    end
 #   it "doesn't work with i2" do

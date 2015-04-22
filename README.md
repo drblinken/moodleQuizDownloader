@@ -1,18 +1,8 @@
-    # MoodleQuizDownloader
+# MoodleQuizDownloader
 
-TODO: Write a gem description
+Automatically downloads all attempts of a Moodle Quiz and stores them as PDF or HTML.
 
 ## Installation
-
-Add this line to your application's Gemfile:
-
-    gem 'moodleQuizDownloader'
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
 
     $ gem install moodleQuizDownloader
 
@@ -40,7 +30,7 @@ for example, run
 to see a list of all attempts in exam 4711 on the specified server,
 and
 
-    $ moodleQuizDownloader.rb -e 4711 -u drblinken -s http://moodle2.htw-berlin.de/ -p geheim --verbose download
+    $ moodleQuizDownloader.rb -e 4711 -u drblinken -s http://moodle.someschool.de/ -p geheim --verbose download
 
 to download them.
 
